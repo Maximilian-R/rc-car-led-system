@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "Animation.h"
+#include "Leds.h"
 
 Animation::Animation()
 {
@@ -65,18 +66,42 @@ time = elapsed time. If this can "overflow", do (time % duration)
 void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
   Serial.print("LEFT INDICATOR LED: ");
   Serial.println(step);
+
+  // LEDS 0-3
+  for (int i = 0; i < steps; i++) {
+    leds[i] = CRGB::Black;
+  }
+  leds[step] = CRGB::Yellow;
+  FastLED.show();
 }
 
 // 4 leds * 2, 4 steps
 void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
   Serial.print("RIGHT INDICATOR LED: ");
   Serial.println(steps - step - 1);
+
+  // LEDS 4-7
+  for (int i = 0; i < steps; i++) {
+    leds[i + 4] = CRGB::Black;
+  }
+  leds[step] = CRGB::Yellow;
+  FastLED.show();
+   
+  FastLED.show();
 }
 
 // 4 * 2 * 2, 2 steps
 void animate_indicator_warning(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
   Serial.print("INDICATORS LED: ");
   Serial.println(step == 0);
+
+  bool on = step % 2 == 1;
+
+  // LEDS 0-7
+  for (int i = 0; i < 8; i++) {
+    leds[i] = on ? CRGB::Yellow : CRGB::Yellow;
+  }
+  FastLED.show();
 }
 
 // 8 leds, 12 steps
