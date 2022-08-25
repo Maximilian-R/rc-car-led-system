@@ -2,8 +2,7 @@
 #include "Animation.h"
 #include "Leds.h"
 
-Animation::Animation()
-{
+Animation::Animation() {
   _start = 0;
   _duration = 0;
   _steps = 0;
@@ -12,8 +11,7 @@ Animation::Animation()
   alive = false;
 }
 
-void Animation::setAnimation(unsigned long duration, bool loopAnimation, updateFunction update, int steps)
-{
+void Animation::setAnimation(unsigned long duration, bool loopAnimation, updateFunction update, int steps) {
   _start = millis();
   _duration = duration;
   _steps = steps;
@@ -23,9 +21,8 @@ void Animation::setAnimation(unsigned long duration, bool loopAnimation, updateF
   alive = true;
 }
 
-void Animation::update()
-{
-  if(alive == false || _update == NULL) {
+void Animation::update() {
+  if (alive == false || _update == NULL) {
     return;
   }
   unsigned long elapsed_time = millis() - _start;
@@ -38,40 +35,23 @@ void Animation::update()
     }
   } else {
     int step = Animation::step(elapsed_time, _duration, _steps);
-    if(step != _lastStep) {
+    if (step != _lastStep) {
       _lastStep = step;
       _update(elapsed_time, _duration, step, _steps);
     }
   }
 }
 
-/*
-0ms * 2 / 1000ms = 0
-500ms * 2 / 1000ms = 1
-1000ms * 2 / 1000ms = 2
-
-0ms * 10 / 1000ms = 0
-500ms * 10 / 1000ms = 5
-1000ms * 2 / 1000ms = 10
-
-time = elapsed time. If this can "overflow", do (time % duration)
-*/
-// int getStep(long elapsed_time, long duration, int value)
-// {
-//   return elapsed_time * value / duration;
-// }
-
-
 // 4 * 2 leds, 4 steps
 void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
   Serial.print("LEFT INDICATOR LED: ");
   Serial.println(step);
 
-  // LEDS 0-3
-  for (int i = 0; i < steps; i++) {
-    leds[i] = CRGB::Black;
-  }
+  // Front left LEDS 0-3, Rear left LEDS 12-15
+  setColorLoop(0, 4, CRGB::Black);
+  setColorLoop(12, 4, CRGB::Black);
   leds[step] = CRGB::Yellow;
+  leds[step + 12] = CRGB::Yellow;
   FastLED.show();
 }
 
@@ -80,13 +60,10 @@ void animate_indicator_right(unsigned long elapsed_time, unsigned long duration,
   Serial.print("RIGHT INDICATOR LED: ");
   Serial.println(steps - step - 1);
 
-  // LEDS 4-7
-  for (int i = 0; i < steps; i++) {
-    leds[i + 4] = CRGB::Black;
-  }
-  leds[step] = CRGB::Yellow;
-  FastLED.show();
-   
+  // Front right LEDS 4-7, Rear right LEDS 8-11
+  setColorLoop(4, 8, CRGB::Black);
+  leds[step + 4] = CRGB::Yellow;
+  leds[step + 8] = CRGB::Yellow;
   FastLED.show();
 }
 
@@ -96,30 +73,31 @@ void animate_indicator_warning(unsigned long elapsed_time, unsigned long duratio
   Serial.println(step == 0);
 
   bool on = step % 2 == 1;
+  CRGB color = on ? CRGB::Yellow : CRGB::Yellow;
 
-  // LEDS 0-7
-  for (int i = 0; i < 8; i++) {
-    leds[i] = on ? CRGB::Yellow : CRGB::Yellow;
-  }
+  // LEDS 0-15
+  setColorLoop(0, 15, color);
   FastLED.show();
 }
 
 // 8 leds, 12 steps
 void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
   Serial.print("SIRENS: ");
-  // reset all lights in siren
 
-  if(step % 2 == 0) {
+  // reset all
+  setColorLoop(0, 16, CRGB::Black);
+
+  if (step % 2 == 0) {
     if (step > 5) {
-      // right lights on
-       Serial.println("RIGHT");
+      setColorLoop(4, 8, CRGB::Blue);
+      Serial.println("RIGHT");
     } else {
-      // left lights on
-       Serial.println("LEFT");
+      setColorLoop(0, 4, CRGB::Red);
+      setColorLoop(12, 4, CRGB::Red);
+      Serial.println("LEFT");
     }
   } else {
     Serial.println("OFF");
   }
+  FastLED.show();
 }
-
-

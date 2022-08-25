@@ -14,5 +14,6 @@
 extern CRGB leds[NUM_LEDS];
 
 void setupLEDS();
+void setColorLoop(int offset, int count, CRGB color);
 
 #endif
