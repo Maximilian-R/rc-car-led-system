@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Enums_h
+#define Enums_h
 
 enum HeadlightState {
   OFF,
@@ -20,3 +21,5 @@ enum DrivingState {
   BRAKING,
   REVERSING
 };
+
+#endif

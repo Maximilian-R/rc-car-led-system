@@ -1,5 +1,8 @@
 #include "Animation.h"
 
+#ifndef Controller_h
+#define Controller_h
+
 // PWM INPUTS ------------------
 #define THROTTLE_PIN 3
 #define STEERING_PIN 2
@@ -23,3 +26,5 @@ extern int steering;
 
 void throttleChange();
 void steeringChange();
+
+#endif

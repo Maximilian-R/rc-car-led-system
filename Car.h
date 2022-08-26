@@ -3,6 +3,9 @@
 #include "Headlights.h"
 #include "Enums.h"
 
+#ifndef Car_h
+#define Car_h
+
 class Car {
 public:
   Car() {}
@@ -74,6 +77,16 @@ private:
     }
   }
 
-  void brakes(bool on) {}
-  void reverse(bool on) {}
+  void brakes(bool on) {
+    //Rear Left:  12-15   Rear Right  8-11
+    setColorLoop(8, 8, on ? CRGB::Red : CRGB::Black);
+    FastLED.show();
+  }
+  void reverse(bool on) {
+    //Rear Left:  12-15   Rear Right  8-11
+    setColorLoop(8, 8, on ? CRGB::White : CRGB::Black);
+    FastLED.show();
+  }
 };
+
+#endif

@@ -85,15 +85,16 @@ void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step
   Serial.print("SIRENS: ");
 
   // reset all
-  setColorLoop(0, 16, CRGB::Black);
+  setColorLoop(16, 12, CRGB::Black);
 
   if (step % 2 == 0) {
     if (step > 5) {
-      setColorLoop(4, 8, CRGB::Blue);
+      // LEDS 16-21
+      setColorLoop(22, 6, CRGB::Blue);
       Serial.println("RIGHT");
     } else {
-      setColorLoop(0, 4, CRGB::Red);
-      setColorLoop(12, 4, CRGB::Red);
+      // LEDS 22-27
+      setColorLoop(16, 6, CRGB::Red);
       Serial.println("LEFT");
     }
   } else {

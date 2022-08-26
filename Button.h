@@ -1,9 +1,13 @@
 #include "Arduino.h"
 
+#ifndef Button_h
+#define Button_h
+
 // Button ----------------------
 #define DEBOUNCE_DELAY 50  //ms
 #define BUTTON_PIN 4
 // -----------------------------
+
 
 typedef void (*callbackFunction)();
 
@@ -44,3 +48,5 @@ private:
   int lastState = HIGH;
   unsigned long lastDebounceTime = 0;
 };
+
+#endif

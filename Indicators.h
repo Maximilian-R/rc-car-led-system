@@ -2,6 +2,9 @@
 #include "Enums.h"
 #include "Animation.h"
 
+#ifndef Indicators_h
+#define Indicators_h
+
 class Indicators {
 public:
   Indicators() {}
@@ -83,3 +86,5 @@ private:
     animation.setAnimation(1000, true, animate_indicator_warning, 2);
   }
 };
+
+#endif
