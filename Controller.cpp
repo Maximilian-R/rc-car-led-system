@@ -24,3 +24,13 @@ void steeringChange() {
     steeringStartTime = steeringCurrentTime;
   }
 }
+
+// https://www.youtube.com/watch?v=UZKxUFkwCc8&ab_channel=TheBoredRobot
+// find PWM of receiver channels
+void debugInputs() {
+  Serial.print("Throttle:");
+  Serial.print(throttle);
+  Serial.print(",");
+  Serial.print("Steering:");
+  Serial.println(steering);
+}

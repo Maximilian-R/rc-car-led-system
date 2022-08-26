@@ -5,7 +5,12 @@
 #ifndef Animation_h
 #define Animation_h
 
-typedef void (*updateFunction)(unsigned long, unsigned long, int, int); // elapsed, duration, step, steps
+#define INDICATOR_LEFT_STEPS 4
+#define INDICATOR_RIGHT_STEPS 4
+#define INDICATOR_WARNING_STEPS 2
+#define SIRENS_STEPS 24
+
+typedef void (*updateFunction)(unsigned long, unsigned long, int); // elapsed, duration, step
 
 class Animation
 {
@@ -26,10 +31,10 @@ class Animation
     bool _loop;
 };
 
-void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step, int steps);
-void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step, int steps);
-void animate_indicator_warning(unsigned long elapsed_time, unsigned long duration, int step, int steps);
-void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step, int steps);
+void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step);
+void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step);
+void animate_indicator_warning(unsigned long elapsed_time, unsigned long duration, int step);
+void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step);
 
 
 #endif

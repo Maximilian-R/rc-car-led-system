@@ -37,13 +37,12 @@ void Animation::update() {
     int step = Animation::step(elapsed_time, _duration, _steps);
     if (step != _lastStep) {
       _lastStep = step;
-      _update(elapsed_time, _duration, step, _steps);
+      _update(elapsed_time, _duration, step);
     }
   }
 }
 
-// 4 * 2 leds, 4 steps
-void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
+void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step) {
   Serial.print("LEFT INDICATOR LED: ");
   Serial.println(step);
 
@@ -55,10 +54,9 @@ void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, 
   FastLED.show();
 }
 
-// 4 leds * 2, 4 steps
-void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
+void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step) {
   Serial.print("RIGHT INDICATOR LED: ");
-  Serial.println(steps - step - 1);
+  Serial.println(INDICATOR_RIGHT_STEPS - step - 1);
 
   // Front right LEDS 4-7, Rear right LEDS 8-11
   setColorLoop(4, 8, CRGB::Black);
@@ -67,8 +65,7 @@ void animate_indicator_right(unsigned long elapsed_time, unsigned long duration,
   FastLED.show();
 }
 
-// 4 * 2 * 2, 2 steps
-void animate_indicator_warning(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
+void animate_indicator_warning(unsigned long elapsed_time, unsigned long duration, int step) {
   Serial.print("INDICATORS LED: ");
   Serial.println(step == 0);
 
@@ -80,25 +77,37 @@ void animate_indicator_warning(unsigned long elapsed_time, unsigned long duratio
   FastLED.show();
 }
 
-// 8 leds, 12 steps
-void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step, int steps) {
+void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step) {
   Serial.print("SIRENS: ");
 
   // reset all
   setColorLoop(16, 12, CRGB::Black);
 
-  if (step % 2 == 0) {
-    if (step > 5) {
-      // LEDS 16-21
-      setColorLoop(22, 6, CRGB::Blue);
-      Serial.println("RIGHT");
+  if (step < 12) {
+    if (step % 2 == 0) {
+      if (step > 5) {
+        // LEDS 16-21
+        setColorLoop(22, 6, CRGB::Blue);
+        Serial.println("RIGHT");
+      } else {
+        // LEDS 22-27
+        setColorLoop(16, 6, CRGB::Red);
+        Serial.println("LEFT");
+      }
     } else {
-      // LEDS 22-27
-      setColorLoop(16, 6, CRGB::Red);
-      Serial.println("LEFT");
+      Serial.println("OFF");
     }
   } else {
-    Serial.println("OFF");
+    if (step % 2 == 0) {
+      // LEDS 16-27
+      setColorLoop(16, 5, CRGB::Blue);
+      setColorLoop(21, 2, CRGB::White);
+      setColorLoop(23, 5, CRGB::Red);
+      Serial.println("BOTH");
+    } else {
+      Serial.println("OFF");
+    }
   }
+
   FastLED.show();
 }

@@ -74,16 +74,16 @@ private:
   }
 
   void left() {
-    animation.setAnimation(1000, true, animate_indicator_left, 4);
+    animation.setAnimation(1000, true, animate_indicator_left, INDICATOR_LEFT_STEPS);
   }
   void right() {
-    animation.setAnimation(1000, true, animate_indicator_right, 4);
+    animation.setAnimation(1000, true, animate_indicator_right, INDICATOR_RIGHT_STEPS);
   }
   void center() {
     animation.alive = false;
   }
   void warning() {
-    animation.setAnimation(1000, true, animate_indicator_warning, 2);
+    animation.setAnimation(1000, true, animate_indicator_warning, INDICATOR_WARNING_STEPS);
   }
 };
 

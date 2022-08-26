@@ -39,12 +39,3 @@ void loop() {
 void onButtonPress() {
   car.toggleLights();
 }
-
-// FIND PWM of receiver channels
-void debugInputs() {
-  Serial.print("Throttle:");
-  Serial.print(throttle);
-  Serial.print(",");
-  Serial.print("Steering:");
-  Serial.println(steering);
-}
