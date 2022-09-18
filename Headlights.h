@@ -1,11 +1,15 @@
 #include "Enums.h"
 #include "Leds.h"
+#include "Animation.h"
 
 #ifndef Headlights_h
 #define Headlights_h
 
 class Headlights {
 public:
+  void update(DrivingState drivingState) {
+    animation.update();
+  }
   void next() {
     switch (state) {
       case OFF:
@@ -39,6 +43,7 @@ public:
       case HALF:
         Serial.println("HALF");
         halfLight();
+        sirens();
         break;
       case FULL:
         Serial.println("FULL");
@@ -48,6 +53,7 @@ public:
   }
 
 private:
+  Animation animation;
   HeadlightState state = OFF;
   void off() {
     // Front Left: 0-3 Front Right 4-7
@@ -59,8 +65,19 @@ private:
     setColorLoop(0, 8, CRGB::White);
     FastLED.show();
   }
-  void halfLight() {}
-  void fullLight() {}
+  void halfLight() {
+    sirens();
+  }
+  void fullLight() {
+    sirensOff();
+  }
+
+  void sirensOff() {
+    animation.alive = false;
+  }
+  void sirens() {
+    animation.setAnimation(2000, true, animate_sirens, SIRENS_STEPS);
+  }
 };
 
 #endif

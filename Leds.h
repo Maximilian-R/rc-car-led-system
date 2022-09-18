@@ -10,7 +10,7 @@
 #define NUM_LEDS 144
 #define LED_PIN 6
 #define VOLTS 5
-#define MAX_AMPS 500
+#define MAX_AMPS 400
 // ------------------------------
 
 /*  

@@ -43,34 +43,34 @@ void Animation::update() {
 }
 
 void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, int step) {
-  Serial.print("LEFT INDICATOR LED: ");
-  Serial.println(step);
+  // Serial.print("LEFT INDICATOR LED: ");
+  // Serial.println(step);
 
   // Front left LEDS 0-3, Rear left LEDS 12-15
   setColorLoop(0, 4, CRGB::Black);
   setColorLoop(12, 4, CRGB::Black);
-  leds[step] = CRGB::Yellow;
-  leds[step + 12] = CRGB::Yellow;
+  leds[step] = CRGB::OrangeRed;
+  leds[step + 12] = CRGB::OrangeRed;
   FastLED.show();
 }
 
 void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step) {
-  Serial.print("RIGHT INDICATOR LED: ");
-  Serial.println(INDICATOR_RIGHT_STEPS - step - 1);
+  // Serial.print("RIGHT INDICATOR LED: ");
+  // Serial.println(INDICATOR_RIGHT_STEPS - step - 1);
 
   // Front right LEDS 4-7, Rear right LEDS 8-11
   setColorLoop(4, 8, CRGB::Black);
-  leds[step + 4] = CRGB::Yellow;
-  leds[step + 8] = CRGB::Yellow;
+  leds[step + 4] = CRGB::OrangeRed;
+  leds[step + 8] = CRGB::OrangeRed;
   FastLED.show();
 }
 
 void animate_indicator_warning(unsigned long elapsed_time, unsigned long duration, int step) {
-  Serial.print("INDICATORS LED: ");
-  Serial.println(step == 0);
+  // Serial.print("INDICATORS LED: ");
+  // Serial.println(step % 2 == 1);
 
   bool on = step % 2 == 1;
-  CRGB color = on ? CRGB::Yellow : CRGB::Yellow;
+  CRGB color = on ? CRGB::OrangeRed : CRGB::Black;
 
   // LEDS 0-15
   setColorLoop(0, 15, color);
@@ -88,14 +88,14 @@ void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step
       if (step > 5) {
         // LEDS 16-21
         setColorLoop(22, 6, CRGB::Blue);
-        Serial.println("RIGHT");
+        // Serial.println("RIGHT");
       } else {
         // LEDS 22-27
         setColorLoop(16, 6, CRGB::Red);
-        Serial.println("LEFT");
+        // Serial.println("LEFT");
       }
     } else {
-      Serial.println("OFF");
+      // Serial.println("OFF");
     }
   } else {
     if (step % 2 == 0) {
@@ -103,9 +103,9 @@ void animate_sirens(unsigned long elapsed_time, unsigned long duration, int step
       setColorLoop(16, 5, CRGB::Blue);
       setColorLoop(21, 2, CRGB::White);
       setColorLoop(23, 5, CRGB::Red);
-      Serial.println("BOTH");
+      // Serial.println("BOTH");
     } else {
-      Serial.println("OFF");
+      // Serial.println("OFF");
     }
   }
 

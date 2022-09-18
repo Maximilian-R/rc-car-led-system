@@ -26,5 +26,6 @@ extern int steering;
 
 void throttleChange();
 void steeringChange();
+void debugInputs();
 
 #endif

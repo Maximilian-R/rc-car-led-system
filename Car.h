@@ -17,6 +17,8 @@ public:
   void update() {
     DrivingState lastState = state;
 
+
+    // PWM should be HIGH for ~0-2000ms, higher values indicates that it's reading LOW.
     if (throttlePulses < THROTTLE_MAX + 100) {
       throttle = throttlePulses;
     }
@@ -45,6 +47,7 @@ public:
     }
 
     indicators.update(state);
+    headlights.update(state);
   }
 
 private:
