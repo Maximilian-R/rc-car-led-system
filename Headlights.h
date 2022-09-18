@@ -73,10 +73,10 @@ private:
   }
 
   void sirensOff() {
-    animation.alive = false;
+    animation.stop();
   }
   void sirens() {
-    animation.setAnimation(2000, true, animate_sirens, SIRENS_STEPS);
+    animation.play(ANIMATE_SIRENS);
   }
 };
 
