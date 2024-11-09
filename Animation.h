@@ -6,7 +6,7 @@
 #ifndef Animation_h
 #define Animation_h
 
-#define INDICATOR_LEFT_STEPS 4
+#define INDICATOR_LEFT_STEPS 8
 #define INDICATOR_RIGHT_STEPS 4
 #define INDICATOR_WARNING_STEPS 2
 #define SIRENS_STEPS 24

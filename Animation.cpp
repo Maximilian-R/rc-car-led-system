@@ -76,8 +76,13 @@ void animate_indicator_left(unsigned long elapsed_time, unsigned long duration, 
   setColorLoop(12, 4, CRGB::Black);
   if(stop) return;
 
-  leds[step] = CRGB::OrangeRed;
-  leds[step + 12] = CRGB::OrangeRed;
+  if(step <= 4) {
+    setColorLoop(0, step, CRGB::OrangeRed);
+    setColorLoop(12, step, CRGB::OrangeRed);
+  } else {
+    setColorLoop(step % 4, 4 - step % 4 , CRGB::OrangeRed);
+    setColorLoop(12 + step % 4, 4 - step % 4, CRGB::OrangeRed);
+  }  
 }
 
 void animate_indicator_right(unsigned long elapsed_time, unsigned long duration, int step, bool stop) {

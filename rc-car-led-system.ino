@@ -27,6 +27,7 @@ void setup() {
 }
 
 void loop() {
+  debugInputs(); 
   button.update();
 
   if (millis() - lastRender >= REFRESH_INTERVAL) {
